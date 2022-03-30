@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - cities_volume:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_DB=cities_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+  cities:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    restart: always
+    depends_on:
+      - db
+volumes:
+  cities_volume:
