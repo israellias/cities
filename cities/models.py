@@ -5,7 +5,7 @@ from base.models import NULLABLE
 
 class City(models.Model):
 	# attributes
-	name = models.CharField(max_length=255, **NULLABLE)
+	name = models.CharField(max_length=255, unique=True, **NULLABLE)
 	lat = models.DecimalField(max_digits=20, decimal_places=6, **NULLABLE)
 	lng = models.DecimalField(max_digits=20, decimal_places=6, **NULLABLE)
 	country = models.CharField(max_length=255, **NULLABLE)
