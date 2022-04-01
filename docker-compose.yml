@@ -11,6 +11,22 @@ services:
       - POSTGRES_DB=cities_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=secret
+  redis_db:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis.conf:/redis.conf
+      - cities_redis:/data
+    command: [ "redis-server", "/redis.conf" ]
+  django-q:
+    build: .
+    command: python manage.py qcluster
+    volumes:
+      - .:/code
+    restart: always
+    depends_on:
+      - redis_db
   cities:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -21,5 +37,8 @@ services:
     restart: always
     depends_on:
       - db
+      - django-q
+      - redis_db
 volumes:
   cities_volume:
+  cities_redis:

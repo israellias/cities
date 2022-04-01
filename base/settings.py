@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 	'rest_framework',
-	'cities'
+	'cities',
+	'django_q',
 ]
 
 MIDDLEWARE = [
@@ -129,4 +130,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
 	'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 	'PAGE_SIZE': 10
+}
+
+Q_CLUSTER = {
+	'name': 'citiescluster',
+	'workers': 8,
+	'timeout': 60,
+	'compress': True,
+	'queue_limit': 500,
+	'label': 'Django Q',
+	'redis': {
+		'host': 'redis_db',
+		'port': 6379,
+		'db': 0
+	},
 }

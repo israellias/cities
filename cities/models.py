@@ -14,6 +14,3 @@ class City(models.Model):
 	capital = models.CharField(max_length=255, **NULLABLE)
 	population = models.IntegerField(**NULLABLE)
 	population_proper = models.IntegerField(**NULLABLE)
-
-	def __str__(self):
-		return self.name

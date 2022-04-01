@@ -16,11 +16,13 @@ Including another URLconf
 from django.urls import path, include
 from rest_framework import routers
 
+from cities.api.city_commands import upload_cities
 from cities.api.city_viewset import CityViewSet
 
 router = routers.DefaultRouter()
-router.register(r'cities', CityViewSet)
+router.register('', CityViewSet)
 
 urlpatterns = [
-	path('', include(router.urls))
+	path(r'cities', include(router.urls)),
+	path(r'cities/upload/', upload_cities, name='upload_cities'),
 ]
