@@ -11,6 +11,23 @@ services:
       - POSTGRES_DB=cities_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=secret
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.0
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=es01
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
   redis_db:
     image: redis:latest
     ports:
@@ -39,6 +56,9 @@ services:
       - db
       - django-q
       - redis_db
+      - es01
 volumes:
   cities_volume:
   cities_redis:
+  data01:
+    driver: local

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 	'rest_framework',
 	'cities',
 	'django_q',
+	'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +146,5 @@ Q_CLUSTER = {
 		'db': 0
 	},
 }
+
+ELASTICSEARCH_URL = env.str('ELASTICSEARCH_URL')

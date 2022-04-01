@@ -23,6 +23,6 @@ router = routers.DefaultRouter()
 router.register('', CityViewSet)
 
 urlpatterns = [
-	path(r'cities', include(router.urls)),
 	path(r'cities/upload/', upload_cities, name='upload_cities'),
+	path(r'cities/', include(router.urls)),
 ]
