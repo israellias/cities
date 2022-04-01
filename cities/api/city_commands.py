@@ -14,8 +14,7 @@ def upload_cities(request: Request):
 
 	dataset = tablib.Dataset()
 	dataset.load(cities, format='csv')
-	loading = len(dataset)
 	for city in dataset.dict:
 		async_task(process_city, city)
 
-	return Response({'loading': loading})
+	return Response({'loading': len(dataset)})

@@ -32,3 +32,20 @@ class CityTestCase(TestCase):
 
 		medellin = City.objects.filter(name='Medellín').exists()
 		self.assertTrue(medellin)
+
+	def test_search(self):
+		file_content = f"""city,lat,lng,country,iso2,admin_name,capital,population,population_proper\n
+		"Cali,4.6126,-74.0705,Colombia,CO,Antioquia,primary,9464000,7963000\n
+		"Medellín,6.2447,-75.5748,Colombia,CO,Antioquia,,,"""
+		file = SimpleUploadedFile(
+			"test.csv",
+			file_content.encode('utf-8')
+		)
+		self.client.post('/cities/upload/', {'file': file})
+
+		response = self.client.get('/cities/search/', {'q': 'cali'})
+		data = response.json()
+		results = data.get('results')
+
+		self.assertGreater(len(results), 0)
+		self.assertEqual(results[0]['name'], 'Cali')
