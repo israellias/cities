@@ -27,7 +27,9 @@ You must keep open the terminal in order to see the application logs
 And then initialize the database in another shell 
 
     $ docker-compose exec cities python manage.py migrate
+    $ docker-compose restart django-q
 
+The second command will ensure that the scheduler has their migrations loaded
 The application is ready to receive requests on port 8000
       
 
