@@ -51,7 +51,7 @@ The application will store the cities on postgresql and elasticsearch asynchrono
 
 #### 2. List cities with pagination
 
-    $ curl -X GET 'http://localhost:8000/cities?page=1'
+    $ curl -L -X GET 'http://localhost:8000/cities?page=1'
 
 You can change the *page* param to get more data.
 
