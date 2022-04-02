@@ -19,6 +19,7 @@ you must to change their values on docker-compose.yml file
 
 To start the application:
 
+    $ cp base/.env.example base/.env
     $ docker-compose up
     
 You must keep open the terminal in order to see the application logs
