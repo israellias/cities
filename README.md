@@ -60,3 +60,11 @@ You can change the *page* param to get more data.
     $ curl -X GET 'http://localhost:8000/cities/search/?q=Cauca'
 
 You can change the *q* param to get more data. For example Cali or Buena
+
+
+#### 4. Tests
+
+    $ docker-compose exec cities python manage.py test
+
+It is a restriction that the containers must be running to test the aplication.
+ Especially es01 container.
