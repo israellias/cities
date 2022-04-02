@@ -1,5 +1,3 @@
-import logging
-
 import requests
 import tablib
 from django.conf import settings
@@ -10,8 +8,6 @@ from rest_framework.response import Response
 
 from cities.api.city_serializer import CitySerializer
 from cities.models import City
-
-logger = logging.getLogger(__name__)
 
 
 def process_city(city):
@@ -35,7 +31,7 @@ def process_city(city):
 		f"{settings.ELASTICSEARCH_URL}/cities/_doc/{obj.pk}",
 		json=serializer.data
 	)
-	logger.log(f"{res.json().get('_id')} added")
+	print(f"{res.json().get('_id')} added")
 
 
 @api_view(['POST'])
