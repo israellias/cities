@@ -10,8 +10,8 @@ from cities.api.city_serializer import CitySerializer
 from cities.models import City
 
 
-def process_city(city):
-	obj, _ = City.objects.update_or_create(
+def _store_on_db(city):
+	return City.objects.update_or_create(
 		name=city.get('city'),
 		defaults={
 			'name': city['city'],
@@ -26,12 +26,19 @@ def process_city(city):
 		}
 	)
 
+
+def _store_on_elasticsearch(obj):
 	serializer = CitySerializer(obj)
 	res = requests.put(
 		f"{settings.ELASTICSEARCH_URL}/cities/_doc/{obj.pk}",
 		json=serializer.data
 	)
 	print(f"{res.json().get('_id')} added")
+
+
+def process_city(city):
+	obj, _ = _store_on_db(city)
+	_store_on_elasticsearch(obj)
 
 
 @api_view(['POST'])
